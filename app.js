@@ -135,7 +135,7 @@ function go(v){
   var el=$("#view");el.innerHTML="";el.className="view-"+v;
   if(listState==="loading"){el.innerHTML='<div class="sheet empty"><div class="loader" aria-hidden="true"><i></i><i></i><i></i></div><p class="muted">Getting this week’s words…</p></div>';return}
   if(v!=="home"&&v!=="list"&&words().length<4){el.innerHTML='<div class="sheet empty"><h2>Add a few more words first</h2><p class="muted">The games need at least 4 words with meanings.</p><button class="btn" data-go="list">Open the word list</button></div>';return}
-  ({home:viewHome,match:viewMatch,cross:viewCross,search:viewSearch,quiz:viewQuiz,spell:viewSpell,memory:viewMemory,scramble:viewScramble,rescue:viewRescue,fall:viewFall,hack:viewHack,battle:viewBattle,list:viewList})[v](el);
+  (VIEWS[v]||{home:viewHome,match:viewMatch,cross:viewCross,search:viewSearch,quiz:viewQuiz,spell:viewSpell,memory:viewMemory,scramble:viewScramble,rescue:viewRescue,fall:viewFall,hack:viewHack,battle:viewBattle,list:viewList}[v])(el);
   window.scrollTo({top:0});
 }
 
@@ -149,9 +149,11 @@ var HERO_ART='<svg class="hero-art" viewBox="0 0 320 170" aria-hidden="true"><ci
 function viewHome(el){
   var tiles=function(grp){return '<div class="tiles">'+GAMES.filter(function(g){return g.grp===grp}).map(function(g,i){return '<button class="tile" data-go="'+g.id+'" style="--c:'+TILE[(i+(grp==="c"?2:0))%5]+'"><span class="ic"><svg width="38" height="38" viewBox="0 0 48 48" aria-hidden="true">'+g.ic+'</svg></span><b>'+g.name+'</b><span>'+g.desc+'</span><span class="go" aria-hidden="true">Play</span></button>'}).join("")+'</div>'};
   el.innerHTML='<section class="hero"><div><h1>Ready to play with words?</h1><p>Pick a game and practice this week’s '+words().length+' words. Every game uses the same list, so the more you play, the better you’ll know them.</p></div>'+HERO_ART+'</section>'+
+  (VIEWS.quest?'<section class="group"><div class="group-head"><span class="badge b-a">Adventure</span><p>Catch and train creatures with your words.</p></div><button class="quest-tile" data-go="quest"><canvas id="qtart" width="432" height="144" aria-hidden="true"></canvas><span><b>Creature Quest</b><span>Explore, catch 100 creatures, beat 8 gym leaders and fill your Creature Book. Every move is a word question.</span><span class="go">Play</span></span></button></section>':'')+
   '<section class="group"><div class="group-head"><span class="badge b-p">Practice</span><p>Learn the words at your own pace.</p></div>'+tiles("p")+'</section>'+
   '<section class="group"><div class="group-head"><span class="badge b-c">Challenge</span><p>Race the clock, the computer and the monsters.</p></div>'+tiles("c")+'</section>'+
   '<section class="wall"><h2>Study the words</h2><dl>'+words().map(function(x,i){return '<div style="--c:'+TILE[i%5]+'"><dt>'+esc(x.w)+'</dt><dd>'+esc(x.d)+'</dd></div>'}).join("")+'</dl></section>';
+  if(VIEWS.quest&&window.Creatures){var qc=$("#qtart",el);if(qc){var cx=qc.getContext("2d");[3,27,95].forEach(function(id,i){Creatures.draw(cx,Creatures.DEX[id-1],3,i*144,0)})}}
 }
 
 /* ---------- match ---------- */
@@ -693,6 +695,8 @@ function viewList(el){
   ready();ss.textContent="";ss.className="status";
 }
 
+var VIEWS=window.WW_VIEWS=window.WW_VIEWS||{};
+window.WW={$:$,$$:$$,esc:esc,shuffle:shuffle,words:words,makeQs:makeQs,mcqHTML:mcqHTML,bindMCQ:bindMCQ,sfx:sfx,celebrate:celebrate,onLeave:onLeave,go:function(v){go(v)},lsGet:lsGet,lsSet:lsSet,views:VIEWS};
 shell();gradeChip();
 if(grade){go("home");loadGrade().then(function(){go("home")})}
 else{listState="ok";list=EXAMPLE;go("home");showPicker(true)}

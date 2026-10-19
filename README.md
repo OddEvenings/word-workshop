@@ -17,3 +17,10 @@ Or edit the file directly on GitHub: one word per line, written as `word - meani
 
 - `index.html`, `app.css`, `app.js`: the site
 - `words/`: the weekly word lists
+
+## Creature Quest
+
+The Adventure game on the home screen. Students explore 8 areas, catch 100 faceless pixel creatures, buy items and beat 8 gym leaders. Every attack and capture is a question about this week's words, so it always uses the current list. Progress is saved in each student's browser and carries over from week to week; the **Save code** tab lets a student move their game to another computer.
+
+- `creatures.js`: the 100 creature designs, drawn in code
+- `quest.js`: the game
