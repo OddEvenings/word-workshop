@@ -2,15 +2,12 @@
 # Put one word per line like this:  word - meaning
 # Lines that start with # are notes and are skipped.
 
-Title: Example words
+Title: Week 10 Vocab 4th Grade
 
-habitat - the natural home of a plant or animal
-predict - to say what you think will happen next
-enormous - very, very big
-journey - a trip from one place to another
-gather - to bring things together into one group
-curious - wanting to know or learn about something
-fragile - easy to break
-observe - to watch something carefully
-swift - moving very fast
-delighted - very happy and pleased
+surge - If there is a surge of water, there is a sudden large increase in its depth.
+perished - When people or animals perished, they died.
+debris - Debris is the pieces of something that was broken or destroyed.
+adoringly - If you act adoringly, you act with a lot of love and admiration.
+capable - If a person is capable, he or she has the skill or ability to do something.
+spectators - Spectators are people who watch an event, such as a sports competition.
+disbelief - Disbelief is not believing that something is true.
