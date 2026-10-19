@@ -2,15 +2,13 @@
 # Put one word per line like this:  word - meaning
 # Lines that start with # are notes and are skipped.
 
-Title: Example words
+Title: Week 10 Vocab 3rd Grade
 
-habitat - the natural home of a plant or animal
-predict - to say what you think will happen next
-enormous - very, very big
-journey - a trip from one place to another
-gather - to bring things together into one group
-curious - wanting to know or learn about something
-fragile - easy to break
-observe - to watch something carefully
-swift - moving very fast
-delighted - very happy and pleased
+independence - If you are free to set your own rules and make your own choices, you have independence.
+declaring - When you are declaring something, you feel strongly about it and are making it clearly known.
+endowed - If you have been endowed with a feature or quality, it is yours and belongs to you.
+presented - If you presented something, you showed it or gave it to someone.
+gritty - When something feels gritty, it feels rough and sandy.
+broad - Something that is broad is wide.
+hoisted - If you hoisted a flag, you used ropes to pull it up a pole.
+
