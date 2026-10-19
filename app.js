@@ -4,7 +4,7 @@
 var REPO="OddEvenings/word-workshop", BRANCH="main";
 var GRADES={"3":{label:"3rd grade",short:"3rd",file:"words/3rd-grade.txt"},"4":{label:"4th grade",short:"4th",file:"words/4th-grade.txt"}};
 var EXAMPLE={title:"Example words",example:true,words:[{w:"habitat",d:"the natural home of a plant or animal"},{w:"predict",d:"to say what you think will happen next"},{w:"enormous",d:"very, very big"},{w:"journey",d:"a trip from one place to another"},{w:"gather",d:"to bring things together into one group"},{w:"curious",d:"wanting to know or learn about something"},{w:"fragile",d:"easy to break"},{w:"observe",d:"to watch something carefully"},{w:"swift",d:"moving very fast"},{w:"delighted",d:"very happy and pleased"}]};
-var LS_GRADE="ww-grade", LS_SOUND="ww-sound", LS_LAST="ww-last-", SS_PREVIEW="ww-preview-";
+var LS_GRADE="ww-grade", LS_LAST="ww-last-", SS_PREVIEW="ww-preview-";
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 function ssGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
@@ -13,7 +13,6 @@ function ssDel(k){try{sessionStorage.removeItem(k)}catch(e){}}
 
 var grade=lsGet(LS_GRADE);if(!GRADES[grade])grade=null;
 var list=EXAMPLE, listState="loading"; // loading | ok | cached | offline | preview
-var soundOn = lsGet(LS_SOUND)!=="off";
 var view = "home";
 var app = document.getElementById("app");
 
@@ -59,9 +58,8 @@ var TILE=["var(--t1)","var(--t2)","var(--t3)","var(--t4)","var(--t5)"];
 var FILL=["var(--f1)","var(--f2)","var(--f3)","var(--f4)","var(--f5)","var(--f6)"];
 
 /* ---------- sound ---------- */
-var actx=null;
-function tone(freqs,dur,type){if(!soundOn)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();var t=actx.currentTime;freqs.forEach(function(f,i){var o=actx.createOscillator(),g=actx.createGain();o.type=type||"triangle";o.frequency.value=f;g.gain.setValueAtTime(0.0001,t+i*dur);g.gain.exponentialRampToValueAtTime(0.18,t+i*dur+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+(i+1)*dur);o.connect(g);g.connect(actx.destination);o.start(t+i*dur);o.stop(t+(i+1)*dur+0.05)})}catch(e){}}
-var sfx={good:function(){tone([660,880],0.11)},bad:function(){tone([220,180],0.14,"sine")},win:function(){tone([523,659,784,1047],0.12)}};
+/* no musical sounds anywhere (teacher's request); games still call these, so they stay as no-ops */
+var sfx={good:function(){},bad:function(){},win:function(){}};
 function say(text){try{if(!("speechSynthesis" in window))return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(text);u.rate=0.8;speechSynthesis.speak(u)}catch(e){}}
 var canSpeak = "speechSynthesis" in window;
 
@@ -83,20 +81,17 @@ var GAMES=[
  {id:"battle",grp:"c",name:"Monster Battle",desc:"Right answers power your attacks.",ic:'<path d="M8 40c-2-18 6-28 16-28s18 10 16 28c-4 3-8 0-11 3-3-3-7-3-10 0-3-3-7 0-11-3z" fill="currentColor"/><path d="M14 34l5-4 5 4 5-4 5 4" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>'}
 ];
 var LOGO='<svg width="40" height="40" viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="15" width="20" height="20" rx="6" fill="var(--t2)" transform="rotate(-8 13 25)"/><rect x="24" y="11" width="20" height="20" rx="6" fill="var(--t1)" transform="rotate(7 34 21)"/><text x="13" y="31" text-anchor="middle" font-family="Baloo 2,sans-serif" font-weight="800" font-size="16" fill="#fff" transform="rotate(-8 13 25)">W</text><text x="34" y="27" text-anchor="middle" font-family="Baloo 2,sans-serif" font-weight="800" font-size="16" fill="#3A2A00" transform="rotate(7 34 21)">W</text><circle cx="40" cy="40" r="4" fill="var(--t4)"/><circle cx="8" cy="42" r="2.5" fill="var(--t3)"/></svg>';
-var ICON_SOUND='<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path class="wave" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="mute" d="M16 9l6 6M22 9l-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 function shell(){
   app.innerHTML=
   '<header class="top"><div class="wrap">'+
    '<button class="brand" data-go="home" aria-label="Word Workshop home">'+LOGO+'<span>Word Workshop</span></button>'+
    '<div class="tools">'+
     '<button class="chip" id="gradebtn" title="Change grade"></button>'+
-    '<button class="iconbtn" id="snd" aria-pressed="'+soundOn+'" aria-label="Sound" title="Sound">'+ICON_SOUND+'</button>'+
     '<button class="ghost" data-go="list" title="Teachers: update the word list">Teacher</button>'+
    '</div>'+
   '</div></header>'+
   '<div class="wrap"><div class="weekbar" id="weekbar"></div><main id="view"></main></div>'+
   '<div class="overlay" id="picker" hidden></div>';
-  $("#snd").onclick=function(){soundOn=!soundOn;lsSet(LS_SOUND,soundOn?"on":"off");this.setAttribute("aria-pressed",soundOn)};
   $("#gradebtn").onclick=function(){showPicker(false)};
   app.addEventListener("click",function(e){var b=e.target.closest("[data-go]");if(b){go(b.getAttribute("data-go"))}});
 }
