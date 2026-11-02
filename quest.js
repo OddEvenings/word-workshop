@@ -108,7 +108,7 @@ function renderMap(cv){var a=S.area,m=mapFor(a),th=AREAS[a].th,ctx=cv.getContext
 var root=null,mode="map",B=null,keyFn=null,msgTimer=0;
 VIEWS.quest=function(el){
   load();root=el;mode=S.started?"map":"intro";B=null;
-  el.innerHTML='<div class="sheet quest"><div class="q-top"><div><h2>Creature Quest</h2><p class="q-where" id="qwhere"></p></div><div class="row"><span class="pill coin" id="qcoins"></span><span class="badges" id="qbadges"></span></div></div>'+
+  el.innerHTML='<div class="sheet quest"><div class="q-top"><div><h2>Creature Quest Classic</h2><p class="q-where" id="qwhere"></p></div><div class="row"><span class="pill coin" id="qcoins"></span><span class="badges" id="qbadges"></span></div></div>'+
    '<nav class="q-tabs" id="qtabs">'+[["map","Map"],["team","My Team"],["book","Creature Book"],["bag","Bag"],["save","Save code"]].map(function(t){return '<button data-q="'+t[0]+'">'+t[1]+'</button>'}).join("")+'</nav><div id="qbody"></div></div>';
   W().$$("#qtabs button",el).forEach(function(b){b.onclick=function(){if(B)return;mode=b.dataset.q;render()}});
   keyFn=function(e){if(mode!=="map"||B||e.ctrlKey||e.metaKey||e.altKey)return;var tag=(e.target.tagName||"").toLowerCase();if(tag==="input"||tag==="textarea")return;
