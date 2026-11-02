@@ -2,13 +2,11 @@
 # Put one word per line like this:  word - meaning
 # Lines that start with # are notes and are skipped.
 
-Title: Week 10 Vocab 4th Grade
+Title: Week 12 Vocab 4th Grade
 
-surge - A sudden large increase in the depth of water.
-perished - Died.
-debris - The pieces of something that was broken or destroyed.
-adoringly - With a lot of love and admiration.
-capable - Having the skill or ability to do something.
-spectators - People who watch an event, such as a sports competition.
-disbelief - The feeling that something cannot be true.
+burst - To break open suddenly.
+opportunities - Chances to make something good happen.
+immigration - The process of coming to live in a new country.
+refugees - People who must leave where they live because of war or other serious problems.
+amazing - Very surprising and wonderful.
 
