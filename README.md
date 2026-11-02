@@ -18,9 +18,17 @@ Or edit the file directly on GitHub: one word per line, written as `word - meani
 - `index.html`, `app.css`, `app.js`: the site
 - `words/`: the weekly word lists
 
-## Creature Quest
+## Creature Quest 2
 
-The Adventure game on the home screen. Students explore 8 areas, catch 100 faceless pixel creatures, buy items and beat 8 gym leaders. Every attack and capture is a question about this week's words, so it always uses the current list. Progress is saved in each student's browser and carries over from week to week; the **Save code** tab lets a student move their game to another computer.
+The Adventure game on the home screen. Students sail to the Glimmer Isles: 8 new towns (each with its own layout), 100 new creatures and 8 new gym leaders. The creatures are magical objects (pots, lanterns, kites, crystals, gears and more), never animals or people, so none of them have faces. It has its own save, so the first game's save is never touched; players who played the first game get a welcome gift of coins and Super Orbs.
+
+- `creatures2.js`: the 100 creature designs, drawn in code
+- `quest2.js`: the game
+- `art/cq2/`: optional pictures for the creatures. List a checked, face-free picture in `art/cq2/manifest.js` and the game uses it instead of the code drawing.
+
+## Creature Quest Classic
+
+The first game, still on the home screen under Creature Quest 2. Students explore 8 areas, catch 100 faceless pixel creatures, buy items and beat 8 gym leaders. Every attack and capture is a question about this week's words, so it always uses the current list. Progress is saved in each student's browser and carries over from week to week; the **Save code** tab lets a student move their game to another computer.
 
 - `creatures.js`: the 100 creature designs, drawn in code
 - `quest.js`: the game
