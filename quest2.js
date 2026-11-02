@@ -251,12 +251,33 @@ function menu(){var a=W().$("#bact",root),hasOrb=ORBS.some(function(k){return S.
    '<button class="bm bag" data-a="bag"><b>Bag</b><span>Use a potion</span></button><button class="bm swap" data-a="swap"><b>Switch</b><span>Change creature</span></button>'+
    (B.leader?'':'<button class="bm run" data-a="run"><b>Run</b><span>Leave the battle</span></button>')+'</div>';
   W().$$(".bm",a).forEach(function(b){b.onclick=function(){({fight:fight,catch:catchMenu,bag:bagMenu,swap:swapMenu,run:run})[b.dataset.a]()}})}
-function ask(prompt,cb){var a=W().$("#bact",root),q=W().makeQs(1)[0];
+/* Questions: usually multiple choice; sometimes the student has to spell the word (like Spell It).
+   How often is set in the Bag tab (S.spell: 0 off, 1 sometimes, 2 often). A correct spelling earns bonus coins. */
+var SPELL_CHANCE=[0,.3,.55];
+function spellOn(){return S.spell===undefined?1:S.spell}
+function ask(prompt,cb,kind){var ws=W().words(),r=Math.random(),chance=SPELL_CHANCE[spellOn()]*(B&&B.leader?1.3:1);
+  if(ws.length&&r<chance)return askSpell(prompt,cb);
+  var a=W().$("#bact",root),q=W().makeQs(1)[0];
   a.innerHTML='<p class="bprompt">'+prompt+'</p>'+W().mcqHTML(q)+'<p class="feedback" id="bfb"></p>';
   W().bindMCQ(a,q,function(ok){S.answered++;var fb=W().$("#bfb",root);
     if(ok){S.right++;S.coins+=2;W().sfx.good();fb.className="feedback good";fb.textContent="Correct! +2 coins"}
     else{W().sfx.bad();fb.className="feedback bad";fb.textContent="The answer was “"+(q.type==="def"?q.x.w:q.x.d)+"”."}
     save();header();setTimeout(function(){cb(ok)},ok?750:1700)})}
+function askSpell(prompt,cb){var a=W().$("#bact",root),ws=W().words(),x=ws[Math.floor(Math.random()*ws.length)],n=W().letters(x.w).length,done=false,hint=1;
+  var hintTxt=function(){var L=W().letters(x.w);return L.split("").map(function(c,i){return i<hint?c:"_"}).join(" ")};
+  a.innerHTML='<p class="bprompt">'+prompt+' <span class="spellbadge">Spelling challenge</span></p>'+
+   '<div class="prompt"><small>Spell the word that means</small><p>'+W().esc(x.d)+'</p><p class="muted spellhint" id="bhint">'+hintTxt()+' <span>('+n+' letters)</span></p></div>'+
+   '<form class="spellbox" id="bsf" autocomplete="off"><input id="bsi" aria-label="Type the word" autocapitalize="off" spellcheck="false" autocorrect="off" placeholder="Type the word"><button class="btn" type="submit">Check</button></form>'+
+   '<div class="row" style="justify-content:center;margin-top:8px">'+(W().canSpeak?'<button class="btn alt sm" type="button" id="bhear">Hear the word</button>':'')+'<button class="btn alt sm" type="button" id="bmore">Show another letter</button></div>'+
+   '<p class="feedback" id="bfb"></p>';
+  var si=W().$("#bsi",a),fb=W().$("#bfb",a);setTimeout(function(){si.focus()},50);
+  var hb=W().$("#bhear",a);if(hb)hb.onclick=function(){W().say(x.w);si.focus()};
+  W().$("#bmore",a).onclick=function(){if(hint<n-1){hint++;W().$("#bhint",a).innerHTML=hintTxt()+' <span>('+n+' letters)</span>'}si.focus()};
+  W().$("#bsf",a).onsubmit=function(e){e.preventDefault();if(done)return;var v=W().norm(si.value);if(!v){si.focus();return}done=true;si.disabled=true;S.answered++;
+    var ok=v===W().norm(x.w),bonus=Math.max(2,5-(hint-1));
+    if(ok){S.right++;S.spelled=(S.spelled||0)+1;S.coins+=bonus;W().sfx.good();fb.className="feedback good";fb.textContent="Spelled right! +"+bonus+" coins"}
+    else{W().sfx.bad();fb.className="feedback bad";fb.textContent="It’s spelled “"+x.w+"”."}
+    save();header();setTimeout(function(){cb(ok)},ok?850:2200)}}
 function anim(sel,c){var e=W().$(sel,root);if(!e)return;e.classList.remove(c);void e.offsetWidth;e.classList.add(c)}
 function fight(){var me=S.team[B.me],foe=B.foes[B.fi];
   ask("Answer right and "+dex(me.id).name+" attacks!",function(ok){
@@ -356,8 +377,11 @@ function detail(){var el=W().$("#bdetail",root);if(!el)return;var d=bookSel&&dex
 /* ---------- bag + save ---------- */
 function viewBag(body){
   body.innerHTML='<h3>Bag</h3><div class="items">'+Object.keys(ITEMS).map(function(k){return '<div class="item">'+itemIcon(k)+'<div><b>'+ITEMS[k].name+'</b><span>'+ITEMS[k].desc+'</span></div><div class="buy"><span class="pill">× '+(S.items[k]||0)+'</span></div></div>'}).join("")+'</div>'+
-   '<p class="muted">Use potions during battles. Give Level Candy from <b>My Team</b>. Buy more at the shop with the blue roof.</p>'+
-   '<div class="statsrow"><span class="pill">Questions answered: '+S.answered+'</span><span class="pill">Right answers: '+S.right+'</span></div>'}
+   '<p class="muted">Use potions during battles. Give Level Candy from <b>My Team</b>. Buy more at the shop (the blue building).</p>'+
+   '<div class="statsrow"><span class="pill">Questions answered: '+S.answered+'</span><span class="pill">Right answers: '+S.right+'</span><span class="pill">Words spelled: '+(S.spelled||0)+'</span></div>'+
+   '<h3 style="margin-top:22px">Spelling challenges</h3><p class="muted">Sometimes a fight, catch or gym question asks you to type the word instead of picking it. Spelling it right earns extra coins.</p>'+
+   '<div class="seg" role="group" aria-label="Spelling challenges">'+[["0","Off"],["1","Sometimes"],["2","Often"]].map(function(o){return '<button data-sp="'+o[0]+'" aria-pressed="'+(String(spellOn())===o[0])+'">'+o[1]+'</button>'}).join("")+'</div>';
+  W().$$("[data-sp]",body).forEach(function(b){b.onclick=function(){S.spell=+b.dataset.sp;save();render()}})}
 var resetArm=false;
 function viewSave(body){
   body.innerHTML='<h3>Save code</h3><p class="muted">Your game saves by itself on this computer. If you switch computers or clear your browser, copy this code first. Then paste it on the new computer to keep playing.</p>'+

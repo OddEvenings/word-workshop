@@ -693,7 +693,7 @@ function viewList(el){
 }
 
 var VIEWS=window.WW_VIEWS=window.WW_VIEWS||{};
-window.WW={$:$,$$:$$,esc:esc,shuffle:shuffle,words:words,makeQs:makeQs,mcqHTML:mcqHTML,bindMCQ:bindMCQ,sfx:sfx,celebrate:celebrate,onLeave:onLeave,go:function(v){go(v)},lsGet:lsGet,lsSet:lsSet,views:VIEWS};
+window.WW={$:$,$$:$$,esc:esc,say:say,norm:norm,letters:letters,canSpeak:canSpeak,shuffle:shuffle,words:words,makeQs:makeQs,mcqHTML:mcqHTML,bindMCQ:bindMCQ,sfx:sfx,celebrate:celebrate,onLeave:onLeave,go:function(v){go(v)},lsGet:lsGet,lsSet:lsSet,views:VIEWS};
 shell();gradeChip();
 if(grade){go("home");loadGrade().then(function(){go("home")})}
 else{listState="ok";list=EXAMPLE;go("home");showPicker(true)}
