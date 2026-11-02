@@ -2,13 +2,11 @@
 # Put one word per line like this:  word - meaning
 # Lines that start with # are notes and are skipped.
 
-Title: Week 10 Vocab 3rd Grade
+Title: Week 12 Vocab 3rd Grade
 
-independence - Being free to set your own rules and make your own choices.
-declaring - Feeling strongly about something and making it clearly known.
-endowed - Given a feature or quality that is yours and belongs to you.
-presented - Showed or gave something to someone.
-gritty - Feels rough and sandy.
-broad - Wide.
-hoisted - Used ropes to pull a flag up a pole.
+ferry - A boat that takes people or vehicles across a river or waterway.
+monument - A large statue or building that honors an important person or event in history.
+inspired - Made you want to do something.
+torch - A long stick with a flame at one end that may be used for light or to start a fire.
+sculptor - An artist who uses clay, stone, wood, or metal to make a work of art.
 
