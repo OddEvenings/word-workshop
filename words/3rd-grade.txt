@@ -2,11 +2,15 @@
 # Put one word per line like this:  word - meaning
 # Lines that start with # are notes and are skipped.
 
-Title: Week 12 Vocab 3rd Grade
+Title: Week 13 Vocab 3rd Grade
 
-ferry - A boat that takes people or vehicles across a river or waterway.
-monument - A large statue or building that honors an important person or event in history.
-inspired - Made you want to do something.
-torch - A long stick with a flame at one end that may be used for light or to start a fire.
-sculptor - An artist who uses clay, stone, wood, or metal to make a work of art.
+audition - A performance you give to show what you can do, often to try out for a part in a play or show.
+rehearse - To practice a play, song, or speech many times so that you are ready.
+ability - The skill or power to do something because you know how.
+actor - A person who performs as a character in plays, movies, or shows.
+genuine - Real and exactly what it seems to be.
+saga - A long, detailed story about heroic events.
+coiled - Shaped into loops or rings.
+tame - To teach a wild animal to be gentle and do what you want.
+whirled - Spun and turned around very quickly.
 
