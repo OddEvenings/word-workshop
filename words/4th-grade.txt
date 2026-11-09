@@ -2,11 +2,20 @@
 # Put one word per line like this:  word - meaning
 # Lines that start with # are notes and are skipped.
 
-Title: Week 12 Vocab 4th Grade
+Title: Week 13 Vocab 4th Grade
 
-burst - To break open suddenly.
-opportunities - Chances to make something good happen.
-immigration - The process of coming to live in a new country.
-refugees - People who must leave where they live because of war or other serious problems.
-amazing - Very surprising and wonderful.
+aspire - To have strong hopes to reach a goal.
+confidence - A strong, sure feeling about yourself and what you can do.
+endeavor - To try very hard to do something.
+fearlessness - Not feeling scared; being brave.
+elegant - Stylish and graceful.
+foreboding - Giving a feeling that something bad is going to happen.
+episode - An event or period of time that is important in some way.
+scowled - Frowned or made an angry look with your face.
+intimidated - Feeling afraid of someone or something.
+subdued - Quiet and soft; not strong, loud, or intense.
+disheveled - Messy; not neat or tidy.
+rigid - Stiff and does not bend easily.
+feisty - Bold, full of energy, and determined.
+sulked - Was upset about something and refused to talk about it.
 
